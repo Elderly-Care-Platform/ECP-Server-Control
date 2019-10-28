@@ -38,7 +38,11 @@ adminControllers.controller('ProductController', [ '$scope',
 			}
 			
 			$scope.editProduct = function(){
-				$http.put("api/v1/product/",$scope.product).success(function(res){
+				var prod = JSON.parse(JSON.stringify($scope.product));
+				if(prod.images){
+					prod.images = prod.images.split(',');
+				}
+				$http.put("api/v1/product/",prod).success(function(res){
 					toastr.success('Product submitted successfully');
 					$location.path('/products');
 				}).error(function(errorResponse){
@@ -50,11 +54,13 @@ adminControllers.controller('ProductController', [ '$scope',
 					$scope.errorMessage = "Error occured in saving the current product.";
 				})
 			}
-			
+
 			$scope.addProduct = function(){
 				var prod = JSON.parse(JSON.stringify($scope.product));
 				delete prod.id;
-				console.log(prod);
+				if(prod.images){
+					prod.images = prod.images.split(',');
+				}
 				$http.post("api/v1/product/",prod).success(function(res){
 					toastr.success('Product submitted successfully');
 					$location.path('/products');

@@ -4,16 +4,24 @@
 		<div class="alert alert-error" ng-show="error">{{errorMessage}}</div>
 			<table style="width: 900px;">
 				<tr>
-					<td><label class="control-label"><strong>Event ID</strong></label>
+					<td><label class="control-label"><strong>Product ID</strong></label>
 					</td>
-					<td><label class="control-label" ng-bind="event.id"></label></td>
+					<td><label class="control-label" ng-bind="product.id"></label></td>
 				</tr>
 				<tr>
 					<td>
-						<label class="control-label" for="title"><strong>Title</strong></label>
+						<label class="control-label" for="title"><strong>Name</strong></label>
 					</td>
 					<td>
-						<input type="text" ng-model="event.title" name="title" id="title">
+						<input type="text" ng-model="product.name" name="name" id="name">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="control-label" for="shortDescription"><strong>Short Description</strong></label>
+					</td>
+					<td>
+						<textarea ng-model="product.shortDescription" name="shortDescription" id="shortDescription"></textarea>
 					</td>
 				</tr>
 				<tr>
@@ -21,43 +29,42 @@
 						<label class="control-label" for="description"><strong>Description</strong></label>
 					</td>
 					<td>
-						<textarea ng-model="event.description" name="description" id="description"></textarea>
+						<textarea ng-model="product.description" name="description" id="description"></textarea>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label class="control-label" for="datetime"><strong>Datetime</strong></label>
+						<label class="control-label" for="isFeatured"><strong>Is Featured</strong></label>
 					</td>
 					<td>
-						<input type="text" ng-model="event.datetime" name="datetime" id="datetime">
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label class="control-label" for="capacity"><strong>Capacity</strong></label>
-					</td>
-					<td>
-						<input type="text" ng-model="event.capacity"name="capacity" id="capacity">
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label class="control-label" for="entryFee"><strong>Entry Fee</strong></label>
-					</td>
-					<td>
-						<input type="text" ng-model="event.entryFee" name="entryFee" id="entryFee">
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label class="control-label" for="eventType"><strong>Event Type</strong></label>
-					</td>
-					<td>
-						<select ng-model="event.eventType" name="eventType" id="eventType">
-							<option value="0"></option>
-							<option value="2">Indoor</option>
-							<option value="1">Outdoor</option>
+						<select ng-model="product.isFeatured" name="isFeatured" id="isFeatured">
+							<option value="true">Yes</option>
+							<option value="false">No</option>
 						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="control-label" for="rating"><strong>Rating</strong></label>
+					</td>
+					<td>
+						<input type="number" ng-model="product.rating" name="rating" id="rating">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="control-label" for="reviews"><strong>Reviews</strong></label>
+					</td>
+					<td>
+						<input type="number" ng-model="product.reviews" name="reviews" id="reviews">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="control-label" for="price"><strong>Price</strong></label>
+					</td>
+					<td>
+						<input type="number" ng-model="product.price" name="price" id="price">
 					</td>
 				</tr>
 				<tr>
@@ -65,7 +72,7 @@
 						<label class="control-label" for="status"><strong>Status</strong></label>
 					</td>
 					<td>
-						<select ng-model="event.status" name="status" id="status">
+						<select ng-model="product.status" name="status" id="status">
 							<option value="0">Active</option>
 							<option value="1">In Active</option>
 						</select>
@@ -73,55 +80,40 @@
 				</tr>
 				<tr>
 					<td>
-						<label class="control-label" for="address"><strong>Address</strong></label>
+						<label class="control-label" for="buyLink"><strong>Buy Link</strong></label>
 					</td>
 					<td>
-						<input type="text" ng-model="event.address" name="address" id="address">
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label class="control-label" for="landmark"><strong>Landmark</strong></label>
-					</td>
-					<td>
-						<input type="text" ng-model="event.landmark" name="landmark" id="landmark">
+						<input type="text" ng-model="product.buyLink" name="buyLink" id="buyLink">
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label class="control-label" for="languages"><strong>Languages</strong></label>
+						<label class="control-label" for="buyLink"><strong>Buy From</strong></label>
 					</td>
 					<td>
-						<input type="text" ng-model="event.languages" name="languages" id="languages">
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label class="control-label" for="organiser"><strong>Organiser</strong></label>
-					</td>
-					<td>
-						<input type="text" ng-model="event.organiser" name="organiser" id="organiser">
+						<input type="text" ng-model="product.buyFrom" name="buyFrom" id="buyFrom">
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label class="control-label" for="orgPhone"><strong>Organiser Phone</strong></label>
+						<label class="control-label" for="images"><strong>Images URL (CSV format)</strong></label>
 					</td>
 					<td>
-						<input type="text" ng-model="event.orgPhone" name="orgPhone" id="orgPhone">
+						<textarea ng-model="product.images" name="images" id="images"></textarea>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label class="control-label" for="orgEmail"><strong>Organiser Email</strong></label>
+						<label class="control-label" for="productCategory"><strong>Product Category Id</strong></label>
 					</td>
 					<td>
-						<input type="text" ng-model="event.orgEmail" name="orgEmail" id="orgEmail">
+						<input type="text" ng-model="product.productCategory.id" name="productCategory" id="productCategory">
 					</td>
 				</tr>
 				<tr ng-show="!error">
 					<td colspan="2">
-						<button type="submit" class="btn btn-primary" ng-click="editEvent()">Submit</button>
+						<button ng-if="product.id" type="submit" class="btn btn-primary" ng-click="editProduct()">Edit Product</button>
+						<button ng-if="!product.id" type="submit" class="btn btn-primary" ng-click="addProduct()">Add Product</button>
 					</td>
 					<td colspan="2" style="text-align: right;">
 						

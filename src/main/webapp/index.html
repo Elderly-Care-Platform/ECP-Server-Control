@@ -114,7 +114,13 @@
 	
 	<script src="js/components/service/ServiceController.js?versionTimeStamp=%PROJECT_VERSION%"></script>
 	<script src="js/components/service/ServiceListController.js?versionTimeStamp=%PROJECT_VERSION%"></script>
-	
+    
+    <script src="js/components/event/EventController.js?versionTimeStamp=%PROJECT_VERSION%"></script>
+    <script src="js/components/event/EventListController.js?versionTimeStamp=%PROJECT_VERSION%"></script>
+
+    <script src="js/components/product/ProductController.js?versionTimeStamp=%PROJECT_VERSION%"></script>
+    <script src="js/components/product/ProductListController.js?versionTimeStamp=%PROJECT_VERSION%"></script>
+    
 	<script src="js/components/common/editConfig.js?versionTimeStamp=%PROJECT_VERSION%"></script>
 	<script src="js/components/edit/editController.js?versionTimeStamp=%PROJECT_VERSION%"></script>
 	<script src="js/components/edit/editInstitutionCtrl.js?versionTimeStamp=%PROJECT_VERSION%"></script>
@@ -183,15 +189,21 @@
 
 
             <div class="nav-collapse collapse in">
-                <ul class="nav" role="navigation">
+                <ul class="nav" role="navigation" style="margin: 9px 10px;">
                 	<li ng-hide="{{root.bc_userRoleId == 'USER'}}">
                         <a href="#/activityLogs">Dashboard</a>
                     </li>
-                	<li ng-hide="{{root.bc_userRoleId == 'USER'}}">
+                	<!-- <li ng-hide="{{root.bc_userRoleId == 'USER'}}">
                         <a href="#/menu">Menu</a>
                     </li>
 					<li ng-hide="{{root.bc_userRoleId == 'USER'}}">
                         <a href="#/housings">Housings</a>
+                    </li> -->
+                    <li ng-hide="{{root.bc_userRoleId == 'USER'}}">
+                        <a href="#/events">Events</a>
+                    </li>
+                    <li ng-hide="{{root.bc_userRoleId == 'USER'}}">
+                        <a href="#/products">Products</a>
                     </li>
                     <li ng-hide="{{root.bc_userRoleId == 'USER'}}">
                         <a href="#/services">Services</a>

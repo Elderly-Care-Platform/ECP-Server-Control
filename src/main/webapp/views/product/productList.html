@@ -1,0 +1,45 @@
+<h3 class='menu'>Products</h3>
+<div ng-controller="ProductListController as showCase">
+	<table datatable="ng" dt-options="showCase.dtOptions" cellspacing="0" class="display" width="100%">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Is Featured</th>
+				<th>Status</th>
+				<th>Buy From</th>
+				<th>Product Category</th>
+				<th>Date Created</th>
+				<th>Edit</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="ProductList in showCase.myProductLists">
+				<td>
+					{{ProductList.name}}
+				</td>
+				<td>
+					{{ProductList.isFeatured}}
+				</td>
+				<td>
+					<span ng-if="ProductList.status == 0">Active</span>
+					<span ng-if="ProductList.status == 1">InActive</span>
+				</td>
+				<td>
+					{{ProductList.buyFrom}}
+				</td>
+				<td>
+					
+					{{ProductList.productCategory.name}}
+				</td>
+				<td>{{ProductList.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+				<td>
+					<div style="text-align: center; margin-top: 5px;">
+						<a href="https://{{host}}{{pathName}}#/products/{{ProductList.id}}">
+							<img src="../../..{{pathName}}img/edit.png" alt="edit" height="26" width="26">
+						</a>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

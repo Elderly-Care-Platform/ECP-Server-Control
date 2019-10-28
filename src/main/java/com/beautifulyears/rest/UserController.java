@@ -7,21 +7,6 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.beautifulyears.constants.ActivityLogConstants;
 import com.beautifulyears.constants.BYConstants;
 import com.beautifulyears.constants.DiscussConstants;
@@ -42,6 +27,21 @@ import com.beautifulyears.util.UserNameHandler;
 import com.beautifulyears.util.Util;
 import com.beautifulyears.util.activityLogHandler.ActivityLogHandler;
 import com.beautifulyears.util.activityLogHandler.UserActivityLogHandler;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * /** The REST based service for managing "users"
@@ -73,6 +73,8 @@ public class UserController {
 
 		try {
 			Query q = new Query();
+			System.out.println(loginRequest.getEmail());
+			System.out.println(loginRequest.getPassword());
 			if (loginRequest.getUserIdType() == BYConstants.REGISTRATION_TYPE_EMAIL) {
 				if (!Util.isEmpty(loginRequest.getEmail())
 						&& !Util.isEmpty(loginRequest.getPassword())) {
@@ -122,7 +124,6 @@ public class UserController {
 
 		} catch (Exception e) {
 			killSession(req, res);
-			System.out.println("No such user exist");
 			LoginResponse blankUser = getBlankUser("UserName or password can't be left blank");
 			return BYGenericResponseHandler.getResponse(blankUser);
 
@@ -276,13 +277,13 @@ public class UserController {
 			return new User(userName, userIdType, userRegType, password, email,
 					phoneNumber, verificationCode, verificationCodeExpiry,
 					socialSignOnId, socialSignOnPlatform, passwordCode,
-					passwordCodeExpiry, userRoleId, "In-Active",userTags);
+					passwordCodeExpiry, userRoleId, "In-Active",userTags,null);
 
 		} else {
 			return new User(userName, userIdType, userRegType, password, email,
 					phoneNumber, verificationCode, verificationCodeExpiry,
 					socialSignOnId, socialSignOnPlatform, passwordCode,
-					passwordCodeExpiry, userRoleId, "In-Active",userTags);
+					passwordCodeExpiry, userRoleId, "In-Active",userTags,null);
 		}
 	}
 

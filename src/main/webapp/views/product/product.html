@@ -1,0 +1,132 @@
+<div class="container-fluid">
+	<div id="wrapper" class="row-fluid">
+		<h3 class='menu'>Event</h3>
+		<div class="alert alert-error" ng-show="error">{{errorMessage}}</div>
+			<table style="width: 900px;">
+				<tr>
+					<td><label class="control-label"><strong>Event ID</strong></label>
+					</td>
+					<td><label class="control-label" ng-bind="event.id"></label></td>
+				</tr>
+				<tr>
+					<td>
+						<label class="control-label" for="title"><strong>Title</strong></label>
+					</td>
+					<td>
+						<input type="text" ng-model="event.title" name="title" id="title">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="control-label" for="description"><strong>Description</strong></label>
+					</td>
+					<td>
+						<textarea ng-model="event.description" name="description" id="description"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="control-label" for="datetime"><strong>Datetime</strong></label>
+					</td>
+					<td>
+						<input type="text" ng-model="event.datetime" name="datetime" id="datetime">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="control-label" for="capacity"><strong>Capacity</strong></label>
+					</td>
+					<td>
+						<input type="text" ng-model="event.capacity"name="capacity" id="capacity">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="control-label" for="entryFee"><strong>Entry Fee</strong></label>
+					</td>
+					<td>
+						<input type="text" ng-model="event.entryFee" name="entryFee" id="entryFee">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="control-label" for="eventType"><strong>Event Type</strong></label>
+					</td>
+					<td>
+						<select ng-model="event.eventType" name="eventType" id="eventType">
+							<option value="0"></option>
+							<option value="2">Indoor</option>
+							<option value="1">Outdoor</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="control-label" for="status"><strong>Status</strong></label>
+					</td>
+					<td>
+						<select ng-model="event.status" name="status" id="status">
+							<option value="0">Active</option>
+							<option value="1">In Active</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="control-label" for="address"><strong>Address</strong></label>
+					</td>
+					<td>
+						<input type="text" ng-model="event.address" name="address" id="address">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="control-label" for="landmark"><strong>Landmark</strong></label>
+					</td>
+					<td>
+						<input type="text" ng-model="event.landmark" name="landmark" id="landmark">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="control-label" for="languages"><strong>Languages</strong></label>
+					</td>
+					<td>
+						<input type="text" ng-model="event.languages" name="languages" id="languages">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="control-label" for="organiser"><strong>Organiser</strong></label>
+					</td>
+					<td>
+						<input type="text" ng-model="event.organiser" name="organiser" id="organiser">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="control-label" for="orgPhone"><strong>Organiser Phone</strong></label>
+					</td>
+					<td>
+						<input type="text" ng-model="event.orgPhone" name="orgPhone" id="orgPhone">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="control-label" for="orgEmail"><strong>Organiser Email</strong></label>
+					</td>
+					<td>
+						<input type="text" ng-model="event.orgEmail" name="orgEmail" id="orgEmail">
+					</td>
+				</tr>
+				<tr ng-show="!error">
+					<td colspan="2">
+						<button type="submit" class="btn btn-primary" ng-click="editEvent()">Submit</button>
+					</td>
+					<td colspan="2" style="text-align: right;">
+						
+					</td>
+				</tr>
+			</table>
+	</div>
+</div>

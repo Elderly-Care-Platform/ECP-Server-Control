@@ -176,7 +176,7 @@ public class ProductController {
 		List<ProductCategory> productCatList = null;
 		try {
 			productCatList = productCatRepo.findAll(new Sort(
-				Direction.DESC, "createdAt"));
+				Direction.ASC, "name"));
 		} catch (Exception e) {
 			Util.handleException(e);
 		}

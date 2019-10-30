@@ -1,6 +1,6 @@
 <div class="container-fluid">
 	<div id="wrapper" class="row-fluid">
-		<h3 class='menu'>Event</h3>
+		<h3 class='menu'>Product</h3>
 		<div class="alert alert-error" ng-show="error">{{errorMessage}}</div>
 			<table style="width: 900px;">
 				<tr>
@@ -104,10 +104,13 @@
 				</tr>
 				<tr>
 					<td>
-						<label class="control-label" for="productCategory"><strong>Product Category Id</strong></label>
+						<label class="control-label" for="productCategory"><strong>Product Category</strong></label>
 					</td>
 					<td>
-						<input type="text" ng-model="product.productCategory.id" name="productCategory" id="productCategory">
+						<select ng-model="product.productCategory.id" name="productCategory" id="productCategory">
+							<option ng-repeat="x in categories" value="{{x.id}}">{{x.id}}</option>
+						</select>
+						<li ng-repeat="x in response.data"></li>
 					</td>
 				</tr>
 				<tr ng-show="!error">

@@ -1,0 +1,45 @@
+<h3 class='menu'>Products  
+		<a class="btn btn-primary pull-right" href="#/askQuestions/new"><i
+			class="icon-plus-sign icon-white"></i> Create New Question</a>
+</h3>
+<div ng-controller="AskQuestionListController as showCase">
+	<table datatable="ng" dt-options="showCase.dtOptions" cellspacing="0" class="display" width="100%">
+		<thead>
+			<tr>
+				<th>Question</th>
+				<th>Answered</th>
+				<th>Asked By</th>
+				<th>Answered By</th>
+				<th>Created At</th>
+				<th>Edit</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="AskQuestionList in showCase.myAskQuestionLists">
+				<td>
+					{{AskQuestionList.question}}
+				</td>
+				<td>
+					<span ng-if="AskQuestionList.answered != 1">No</span>
+					<span ng-if="AskQuestionList.answered == 1">Yes</span>
+				</td>
+				<td>
+					{{AskQuestionList.askedBy.userName}}
+				</td>
+				<td>
+					<span ng-if="AskQuestionList.answeredBy && AskQuestionList.answeredBy.basicProfileInfo">
+					{{AskQuestionList.answeredBy.basicProfileInfo.firstName}}
+					</span>
+				</td>
+				<td>{{AskQuestionList.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+				<td>
+					<div style="text-align: center; margin-top: 5px;">
+						<a href="#/askQuestions/{{AskQuestionList.id}}">
+							<img src="../../..{{pathName}}img/edit.png" alt="edit" height="26" width="26">
+						</a>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

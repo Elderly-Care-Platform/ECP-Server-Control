@@ -121,6 +121,9 @@
     <script src="js/components/product/ProductController.js?versionTimeStamp=%PROJECT_VERSION%"></script>
     <script src="js/components/product/ProductListController.js?versionTimeStamp=%PROJECT_VERSION%"></script>
 
+    <script src="js/components/productCategory/ProductCategoryController.js?versionTimeStamp=%PROJECT_VERSION%"></script>
+    <script src="js/components/productCategory/ProductCategoryListController.js?versionTimeStamp=%PROJECT_VERSION%"></script>
+
     <script src="js/components/askQuestion/AskQuestionController.js?versionTimeStamp=%PROJECT_VERSION%"></script>
     <script src="js/components/askQuestion/AskQuestionListController.js?versionTimeStamp=%PROJECT_VERSION%"></script>
     
@@ -207,6 +210,9 @@
                     </li>
                     <li ng-hide="{{root.bc_userRoleId == 'USER'}}">
                         <a href="#/products">Products</a>
+                    </li>
+                    <li ng-hide="{{root.bc_userRoleId == 'USER'}}">
+                        <a href="#/products/category/list">Products Cat.</a>
                     </li>
                     <li ng-hide="{{root.bc_userRoleId == 'USER'}}">
                         <a href="#/services">Services</a>

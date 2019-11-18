@@ -183,6 +183,32 @@ public class ProductController {
 		return BYGenericResponseHandler.getResponse(productCatList);
 	}
 
+	/**
+	 * API to get the product detail for provided productId
+	 *
+	 * @param req
+	 * @param productCategoryId
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(method = { RequestMethod.GET }, value = { "/category" }, produces = { "application/json" })
+	@ResponseBody
+	public Object getProductCatgoryDetail(HttpServletRequest req,
+								   @RequestParam(value = "productCategoryId", required = true) String productCategoryId)
+			throws Exception {
+		LoggerUtil.logEntry();
+
+		ProductCategory productCategory = productCatRepo.findOne(productCategoryId);
+		try {
+			if (null == productCategory) {
+				throw new BYException(BYErrorCodes.PRODUCT_NOT_FOUND);
+			}
+		} catch (Exception e) {
+			Util.handleException(e);
+		}
+		return BYGenericResponseHandler.getResponse(productCategory);
+	}
+
 	@RequestMapping(value = { "/category" }, method = { RequestMethod.POST }, consumes = { "application/json" }, produces = { "application/json" })
 	@ResponseBody
 	public Object submitProductCategory(@RequestBody ProductCategory productCategory, HttpServletRequest request) throws Exception {

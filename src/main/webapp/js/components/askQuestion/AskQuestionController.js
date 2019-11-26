@@ -2,24 +2,18 @@ adminControllers.controller('AskQuestionController', [ '$scope',
 		'$routeParams', '$location','$http',
 		function($scope, $routeParams, $location, $http) {
 			$scope.error = false;
-			var id = $routeParams.productId;
-			$scope.product = {
+			var id = $routeParams.askQuestionId;
+			$scope.ask = {
 				id: "",
-				name: "",
-				shortDescription: "",
+				question: "",
 				description:"",
-				isFeatured: false,
-				rating: 0,
-				reviews: 0,
-				price: 0,
-				status: 0,
-				buyLink: "",
-				buyFrom: "",
-				images:[],
-				productCategory:""
+				askCategory:"",
+				answeredBy:"",
+				askedBy:"",
+				answered:false
 			};
 			$scope.categories = [];
-			$http.get("api/v1/product/category/list").success(
+			$http.get("api/v1/ask/category/list").success(
 				function(response) {
 					response = response.data;
 					if(response != null && response !== ""){
@@ -35,12 +29,12 @@ adminControllers.controller('AskQuestionController', [ '$scope',
 					}
 				});
 			if(id != "new"){
-				$scope.product.id = id;
-				$http.get("api/v1/product?productId="+id).success(
+				$scope.ask.id = id;
+				$http.get("api/v1/ask?askQuesId="+id).success(
 					function(response) {
 						response = response.data;
 						if(response != null && response !== ""){
-							$scope.product = response;
+							$scope.ask = response;
 						}else{
 							$scope.error = true;
 							$scope.errorMessage = "No AskQuestion found";
@@ -54,39 +48,33 @@ adminControllers.controller('AskQuestionController', [ '$scope',
 			}
 			
 			$scope.editAskQuestion = function(){
-				var prod = JSON.parse(JSON.stringify($scope.product));
-				if(prod.images){
-					prod.images = prod.images.split(',');
-				}
-				$http.put("api/v1/product/",prod).success(function(res){
+				var prod = JSON.parse(JSON.stringify($scope.ask));
+				$http.put("api/v1/ask",prod).success(function(res){
 					toastr.success('AskQuestion submitted successfully');
-					$location.path('/products');
+					$location.path('/askQuestions');
 				}).error(function(errorResponse){
 					if(errorResponse.data && errorResponse.data.error && errorResponse.data.error.errorCode === 3002){
 						$location.path('/users/login');
 						 return;
 			        }
 					$scope.error = true;
-					$scope.errorMessage = "Error occured in saving the current product.";
+					$scope.errorMessage = "Error occured in saving the current ask.";
 				})
 			}
 
 			$scope.addAskQuestion = function(){
-				var prod = JSON.parse(JSON.stringify($scope.product));
+				var prod = JSON.parse(JSON.stringify($scope.ask));
 				delete prod.id;
-				if(prod.images){
-					prod.images = prod.images.split(',');
-				}
-				$http.post("api/v1/product/",prod).success(function(res){
+				$http.post("api/v1/ask",prod).success(function(res){
 					toastr.success('AskQuestion submitted successfully');
-					$location.path('/products');
+					$location.path('/askQuestions');
 				}).error(function(errorResponse){
 					if(errorResponse.data && errorResponse.data.error && errorResponse.data.error.errorCode === 3002){
 						$location.path('/users/login');
 						 return;
 			        }
 					$scope.error = true;
-					$scope.errorMessage = "Error occured in saving the current product.";
+					$scope.errorMessage = "Error occured in saving the current ask.";
 				})
 			}
 		} ]);

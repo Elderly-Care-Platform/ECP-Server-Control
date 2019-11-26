@@ -49,6 +49,8 @@ byAdminApp.config(['$routeProvider',
 
       .when('/askQuestions', {templateUrl: 'views/askQuestion/askQuestionList.html'})
       .when('/askQuestions/:askQuestionId', {templateUrl: 'views/askQuestion/askQuestion.html', controller: 'AskQuestionController'})
+      .when('/askQuestions/category/list', {templateUrl: 'views/askQuestionCategory/askQuestionCategoryList.html'})
+      .when('/askQuestions/category/:askQuestionCategoryId', {templateUrl: 'views/askQuestionCategory/askQuestionCategory.html', controller: 'AskQuestionCategoryController'})
 
       //.when('/edit/:userId', {controller: 'editController'})
       

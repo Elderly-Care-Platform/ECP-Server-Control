@@ -171,6 +171,24 @@ public class AskController {
 		return BYGenericResponseHandler.getResponse(qcatList);
 	}
 
+	@RequestMapping(method = { RequestMethod.GET }, value = { "/category" }, produces = { "application/json" })
+	@ResponseBody
+	public Object getAskCatgoryDetail(HttpServletRequest req,
+								   @RequestParam(value = "askCategoryId", required = true) String askCategoryId)
+			throws Exception {
+		LoggerUtil.logEntry();
+
+		AskCategory askCategory = askCatRepo.findOne(askCategoryId);
+		try {
+			if (null == askCategory) {
+				throw new BYException(BYErrorCodes.ASK_QUESTION_NOT_FOUND);
+			}
+		} catch (Exception e) {
+			Util.handleException(e);
+		}
+		return BYGenericResponseHandler.getResponse(askCategory);
+	}
+
 	@RequestMapping(value = { "/category" }, method = { RequestMethod.POST }, consumes = { "application/json" }, produces = { "application/json" })
 	@ResponseBody
 	public Object submitCategory(@RequestBody AskCategory askCategory, HttpServletRequest request) throws Exception {

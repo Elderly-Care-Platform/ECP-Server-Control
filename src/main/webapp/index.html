@@ -126,6 +126,9 @@
 
     <script src="js/components/askQuestion/AskQuestionController.js?versionTimeStamp=%PROJECT_VERSION%"></script>
     <script src="js/components/askQuestion/AskQuestionListController.js?versionTimeStamp=%PROJECT_VERSION%"></script>
+
+    <script src="js/components/askQuestionCategory/AskQuestionCategoryController.js?versionTimeStamp=%PROJECT_VERSION%"></script>
+    <script src="js/components/askQuestionCategory/AskQuestionCategoryListController.js?versionTimeStamp=%PROJECT_VERSION%"></script>
     
 	<script src="js/components/common/editConfig.js?versionTimeStamp=%PROJECT_VERSION%"></script>
 	<script src="js/components/edit/editController.js?versionTimeStamp=%PROJECT_VERSION%"></script>
@@ -219,6 +222,9 @@
                     </li>
                     <li ng-hide="{{root.bc_userRoleId == 'USER'}}">
                         <a href="#/askQuestions">Ask Expert (Questions)</a>
+                    </li>
+                    <li ng-hide="{{root.bc_userRoleId == 'USER'}}">
+                        <a href="#/askQuestions/category/list">Questions Cat.</a>
                     </li>
                     <!-- <li ng-hide="{{root.bc_userRoleId == 'USER'}}">
                         <a href="#/userProfile">Profiles</a>

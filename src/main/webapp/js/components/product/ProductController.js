@@ -55,7 +55,7 @@ adminControllers.controller('ProductController', [ '$scope',
 			
 			$scope.editProduct = function(){
 				var prod = JSON.parse(JSON.stringify($scope.product));
-				if(prod.images){
+				if(!Array.isArray(prod.images)){
 					prod.images = prod.images.split(',');
 				}
 				$http.put("api/v1/product/",prod).success(function(res){
@@ -74,7 +74,7 @@ adminControllers.controller('ProductController', [ '$scope',
 			$scope.addProduct = function(){
 				var prod = JSON.parse(JSON.stringify($scope.product));
 				delete prod.id;
-				if(prod.images){
+				if(!Array.isArray(prod.images)){
 					prod.images = prod.images.split(',');
 				}
 				$http.post("api/v1/product/",prod).success(function(res){

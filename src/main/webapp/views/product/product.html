@@ -108,7 +108,7 @@
 					</td>
 					<td>
 						<select ng-model="product.productCategory.id" name="productCategory" id="productCategory">
-							<option ng-repeat="x in categories" value="{{x.id}}">{{x.id}}</option>
+							<option ng-repeat="x in categories" value="{{x.id}}">{{x.name}}</option>
 						</select>
 						<li ng-repeat="x in response.data"></li>
 					</td>

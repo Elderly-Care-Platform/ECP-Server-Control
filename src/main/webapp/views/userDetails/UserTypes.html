@@ -16,6 +16,15 @@
 				</div>
 			</div>
 			<div class="by_userType">
+				<div  ng-repeat="type in expertUserType">
+					<label >{{type.value}} 
+					<input type="checkbox" class="checkBoxTwo" id="{{type.key}}"
+						ng-model="type.selected" ng-change="selectUserType(this)" ng-checked="userType.indexOf(type.key) > -1" />
+					</label>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			<div class="by_userType">
 				<div  ng-repeat="type in profUserType">
 					<label >{{type.value}} 
 					<input type="checkbox" class="checkBoxTwo" id="{{type.key}}"

@@ -236,7 +236,6 @@ public class UserProfileController {
 //				}
 			} else {
 				throw new BYException(BYErrorCodes.MISSING_PARAMETER);
-
 			}
 		} catch (Exception e) {
 			Util.handleException(e);

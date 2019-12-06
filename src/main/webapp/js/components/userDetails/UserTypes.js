@@ -195,13 +195,7 @@ adminControllers
 							"userId": $scope.userId
 						}, $scope.userProfileInfo, function(res) {
 							console.log("success");
-							if($scope.userType.indexOf(9)!=-1){
-								$location.path('/userDetails/' + $scope.userId);
-							}
-							else{
-								$location.path('/userDetailProfile/' + $scope.userId);
-							}
-							
+							$location.path('/userDetailProfile/' + $scope.userId);
 						}, function(err) {
 							console.log("error");
 						});
@@ -214,13 +208,7 @@ adminControllers
 							"userId": $scope.userId
 						}, $scope.userProfileInfo, function(res) {
 							console.log("success");
-							if($scope.userType.indexOf(9)!=-1){
-								$location.path('/userDetails/' + $scope.userId);
-							}
-							else{
-								$location.path('/userDetailProfile/' + $scope.userId);
-							}
-							
+							$location.path('/userDetailProfile/' + $scope.userId);
 						}, function(err) {
 							console.log("error");
 						});			

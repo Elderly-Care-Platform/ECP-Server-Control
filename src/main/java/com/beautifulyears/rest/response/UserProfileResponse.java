@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.beautifulyears.domain.AskCategory;
 import com.beautifulyears.domain.BasicProfileInfo;
 import com.beautifulyears.domain.HousingFacility;
 import com.beautifulyears.domain.IndividualProfileInfo;
@@ -48,6 +49,9 @@ public class UserProfileResponse implements IResponse {
 		private boolean isFeatured;
 		private boolean verified;
 		private List<HousingFacility> facilities = new ArrayList<HousingFacility>();
+		private int age;
+		private String workTitle;
+		private List<AskCategory> experties;
 
 		public UserProfileEntity(UserProfile profile, User user) {
 			this.setId(profile.getId());
@@ -61,6 +65,9 @@ public class UserProfileResponse implements IResponse {
 			this.setStatus(profile.getStatus());
 			this.setRatingPercentage(profile.getAggrRatingPercentage());
 			this.setSystemTags(profile.getSystemTags());
+			this.setAge(profile.getAge());
+			this.setWorkTitle(profile.getWorkTitle());
+			this.setExperties(profile.getExperties());
 			if (null != user && profile.getRatedBy().contains(user.getId())) {
 				this.setRatedByUser(true);
 			}
@@ -217,6 +224,30 @@ public class UserProfileResponse implements IResponse {
 
 		public void setLastModifiedAt(Date lastModifiedAt) {
 			this.lastModifiedAt = lastModifiedAt;
+		}
+
+		public int getAge() {
+			return age;
+		}
+
+		public void setAge(int age) {
+			this.age = age;
+		}
+
+		public String getWorkTitle() {
+			return workTitle;
+		}
+
+		public void setWorkTitle(String workTitle) {
+			this.workTitle = workTitle;
+		}
+
+		public List<AskCategory> getExperties() {
+			return experties;
+		}
+
+		public void setExperties(List<AskCategory> experties) {
+			this.experties = experties;
 		}
 
 	}

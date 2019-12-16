@@ -6,11 +6,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.beautifulyears.constants.UserRolePermissions;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.beautifulyears.constants.UserRolePermissions;
 
 @Document(collection = "users")
 public class User implements Serializable {
@@ -44,6 +44,7 @@ public class User implements Serializable {
 	private Integer userRegType;
 	private String phoneNumber;
 	private List<String> userTags = new ArrayList<String>();
+	private List<String> favEvents = new ArrayList<String>();
 	
 	private List<Integer> permissions = new ArrayList<Integer>();
 	
@@ -118,7 +119,8 @@ public class User implements Serializable {
 			String phoneNumber, String verificationCode,
 			Date verificationCodeExpiry, String socialSignOnId,
 			String socialSignOnPlatform, String passwordCode,
-			Date passwordCodeExpiry, String userRoleId, String isActive,List<String> userTags) {
+			Date passwordCodeExpiry, String userRoleId, 
+			String isActive,List<String> userTags, List<String> favEvents) {
 		super();
 		this.userName = userName;
 		this.password = password;
@@ -136,6 +138,7 @@ public class User implements Serializable {
 		this.isActive = isActive;
 		this.permissions = UserRolePermissions.getUserPermsForRole(userRoleId);
 		this.userTags = userTags;
+		this.favEvents = favEvents;
 	}
 
 	public Date getCreatedAt() {
@@ -231,6 +234,14 @@ public class User implements Serializable {
 		this.userRoleId = userRoleId;
 		this.permissions = UserRolePermissions.getUserPermsForRole(userRoleId);
 
+	}
+
+	public List<String> getFavEvents() {
+		return favEvents;
+	}
+
+	public void setFavEvents(List<String> favEvents) {
+		this.favEvents = favEvents;
 	}
 
 	@Override

@@ -39,6 +39,19 @@ byAdminApp.config(['$routeProvider',
       .when('/services', {templateUrl: 'views/service/serviceList.html'})
       .when('/services/:userId', {templateUrl: 'views/service/service.html', controller: 'ServiceController'})
      
+      .when('/events', {templateUrl: 'views/event/eventList.html'})
+      .when('/events/:eventId', {templateUrl: 'views/event/event.html', controller: 'EventController'})
+      
+      .when('/products', {templateUrl: 'views/product/productList.html'})
+      .when('/products/:productId', {templateUrl: 'views/product/product.html', controller: 'ProductController'})
+      .when('/products/category/list', {templateUrl: 'views/productCategory/productCategoryList.html'})
+      .when('/products/category/:productCategoryId', {templateUrl: 'views/productCategory/productCategory.html', controller: 'ProductCategoryController'})
+
+      .when('/askQuestions', {templateUrl: 'views/askQuestion/askQuestionList.html'})
+      .when('/askQuestions/:askQuestionId', {templateUrl: 'views/askQuestion/askQuestion.html', controller: 'AskQuestionController'})
+      .when('/askQuestions/category/list', {templateUrl: 'views/askQuestionCategory/askQuestionCategoryList.html'})
+      .when('/askQuestions/category/:askQuestionCategoryId', {templateUrl: 'views/askQuestionCategory/askQuestionCategory.html', controller: 'AskQuestionCategoryController'})
+
       //.when('/edit/:userId', {controller: 'editController'})
       
       .when('/edit/:userId', {templateUrl: 'views/edit/edit.html', controller: 'editController'})

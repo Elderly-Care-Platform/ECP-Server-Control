@@ -8,6 +8,7 @@ define(['byApp', 'byUtil'], function(byApp, byUtil) {
             }];
         //        {key:'2', value:"I volunteer with senior people", category:"indv"},
 
+        $scope.expertUserType =[{key:'9', value:"I am an expert", category:"exp"}];
         $scope.profUserType =[{key:'7', value:"I am an elder care professional", category:"indv2"}];
 
         $scope.housingUserType = [

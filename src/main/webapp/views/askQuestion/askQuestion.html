@@ -1,0 +1,49 @@
+<div class="container-fluid">
+	<div id="wrapper" class="row-fluid">
+		<h3 class='menu'>Ask Question</h3>
+		<div class="alert alert-error" ng-show="error">{{errorMessage}}</div>
+			<table style="width: 900px;">
+				<tr>
+					<td><label class="control-label"><strong>Ask Question ID</strong></label>
+					</td>
+					<td><label class="control-label" ng-bind="ask.id"></label></td>
+				</tr>
+				<tr>
+					<td>
+						<label class="control-label" for="title"><strong>Name</strong></label>
+					</td>
+					<td>
+						<input type="text" ng-model="ask.question" name="question" id="question">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="control-label" for="description"><strong>Description</strong></label>
+					</td>
+					<td>
+						<textarea ng-model="ask.description" name="description" id="description"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="control-label" for="askCategory"><strong>Ask Category</strong></label>
+					</td>
+					<td>
+						<select ng-model="ask.askCategory.id" name="askCategory" id="askCategory">
+							<option ng-repeat="x in categories" value="{{x.id}}">{{x.name}}</option>
+						</select>
+						<li ng-repeat="x in response.data"></li>
+					</td>
+				</tr>
+				<tr ng-show="!error">
+					<td colspan="2">
+						<button ng-if="ask.id" type="submit" class="btn btn-primary" ng-click="editAskQuestion()">Edit Ask Question</button>
+						<button ng-if="!ask.id" type="submit" class="btn btn-primary" ng-click="addAskQuestion()">Add Ask Question</button>
+					</td>
+					<td colspan="2" style="text-align: right;">
+						
+					</td>
+				</tr>
+			</table>
+	</div>
+</div>

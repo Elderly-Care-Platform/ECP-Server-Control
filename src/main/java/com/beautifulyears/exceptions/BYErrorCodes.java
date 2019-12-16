@@ -33,6 +33,11 @@ public enum BYErrorCodes {
 	REVIEW_TYPE_INVALID(4001,"Invalid review type"),
 	RATING_VALUE_INVALID(4002,"Invalid rating value,rating percentage value should be between 0 to 100."),
 	
+	// product
+	PRODUCT_NOT_FOUND(6001, "Product content with provided productId doesn't exist"),
+	// ask question
+	ASK_QUESTION_NOT_FOUND(7001, "Ask Question content with provided askQuesId doesn't exist"),
+	
 	//profile error
 	USER_PROFILE_DOES_NOT_EXIST(5001,"User profile for the sent userId does not exist")
 

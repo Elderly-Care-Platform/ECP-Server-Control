@@ -56,6 +56,12 @@ adminControllers
 				}];
 				//        {key:'2', value:"I volunteer with senior people", category:"indv"},
 
+				$scope.expertUserType = [{
+					key: 9,
+					value: "I am an expert",
+					category: "exp"
+				}];
+
 				$scope.profUserType = [{
 					key: 7,
 					value: "I am an elder care professional",
@@ -100,6 +106,19 @@ adminControllers
 							$scope.unSelectUserType($scope.institutionUserType);
 							$scope.unSelectUserType($scope.otherUserType);
 							$scope.clearUserType = true;
+						}
+
+						if ($scope.userCategory === $scope.expertUserType[0].category) {
+							$scope.clearUserType = false
+							if ($scope.clearUserType == false) {
+								$scope.userType = [];
+							}
+							$scope.userType.push(userArray);
+							$scope.unSelectUserType($scope.profUserType);
+							$scope.unSelectUserType($scope.individualUserType);
+							$scope.unSelectUserType($scope.housingUserType);
+							$scope.unSelectUserType($scope.otherUserType);
+							$scope.unSelectUserType($scope.institutionUserType);
 						}
 
 						if ($scope.userCategory === $scope.profUserType[0].category) {

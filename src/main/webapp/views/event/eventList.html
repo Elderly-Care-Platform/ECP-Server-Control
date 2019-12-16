@@ -1,0 +1,49 @@
+<h3 class='menu'>Events</h3>
+<div ng-controller="EventListController as showCase">
+	<table datatable="ng" dt-options="showCase.dtOptions" cellspacing="0" class="display" width="100%">
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Capacity</th>
+				<th>Entry Fee</th>
+				<th>Event Type</th>
+				<th>Organiser</th>
+				<th>Status</th>
+				<th>Event Date / Time</th>
+				<th>Date Created</th>
+				<th>Edit</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="EventList in showCase.myEventLists">
+				<td>
+					{{EventList.title}}
+				</td>
+				<td>
+					{{EventList.capacity}}
+				</td>
+				<td>
+					{{EventList.entryFee}}
+				</td>
+				<td>
+					<span ng-if="EventList.eventType == 2">Indoor</span>
+					<span ng-if="EventList.eventType == 1">Outdoor</span>
+				</td>
+				<td>{{EventList.organiser}}</td>
+				<td>
+					<span ng-if="EventList.status == 0">Active</span>
+					<span ng-if="EventList.status == 1">InActive</span>
+				</td>
+				<td>{{EventList.datetime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+				<td>{{EventList.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+				<td>
+					<div style="text-align: center; margin-top: 5px;">
+						<a href="https://{{host}}{{pathName}}#/events/{{EventList.id}}">
+							<img src="../../..{{pathName}}img/edit.png" alt="edit" height="26" width="26">
+						</a>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

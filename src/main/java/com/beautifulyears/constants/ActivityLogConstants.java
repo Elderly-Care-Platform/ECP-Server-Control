@@ -49,5 +49,8 @@ public class ActivityLogConstants {
 	// 18
 	// 19
 	// 20
+	public static final int ACTIVITY_TYPE_PRODUCT = 21;
+	public static final int ACTIVITY_TYPE_PRODUCT_CATEGORY = 22;
+	public static final int ACTIVITY_TYPE_PRODUCT_REVIEW = 23;
 
 }

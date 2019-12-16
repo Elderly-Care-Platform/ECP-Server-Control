@@ -1,0 +1,28 @@
+<h3 class='menu'>Ask Question Categories 
+		<a class="btn btn-primary pull-right" href="#/askQuestions/category/new"><i
+			class="icon-plus-sign icon-white"></i> Create New Ask Question Category</a>
+</h3>
+<div ng-controller="AskQuestionCategoryListController as showCase">
+	<table datatable="ng" dt-options="showCase.dtOptions" cellspacing="0" class="display" width="100%">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Edit</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="AskQuestionCategoryList in showCase.myAskQuestionCategoryLists">
+				<td>
+					{{AskQuestionCategoryList.name}}
+				</td>
+				<td>
+					<div style="text-align: center; margin-top: 5px;">
+						<a href="#/askQuestions/category/{{AskQuestionCategoryList.id}}">
+							<img src="../../..{{pathName}}img/edit.png" alt="edit" height="26" width="26">
+						</a>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

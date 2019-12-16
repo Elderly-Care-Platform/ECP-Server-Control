@@ -217,16 +217,13 @@ public class UserProfileController {
 //					if (userProfile.getUserId() != null
 //							&& userProfile.getUserId().equals(
 //									currentUser.getId())) {
-						if (this.userProfileRepository.findByUserId(userProfile
-								.getUserId()) == null) {
+						if (this.userProfileRepository.findByUserId(userProfile.getUserId()) == null) {
 							profile = new UserProfile();
-							profile.setUserId(userProfile
-									.getUserId());
+							profile.setUserId(userProfile.getUserId());
 							profile.setUserTypes(userProfile.getUserTypes());
 							userProfileRepository.save(profile);
 						} else {
-							throw new BYException(
-									BYErrorCodes.USER_ALREADY_EXIST);
+							throw new BYException(BYErrorCodes.USER_ALREADY_EXIST);
 						}
 //					} else {
 //						throw new BYException(BYErrorCodes.USER_NOT_AUTHORIZED);
@@ -236,13 +233,11 @@ public class UserProfileController {
 //				}
 			} else {
 				throw new BYException(BYErrorCodes.MISSING_PARAMETER);
-
 			}
 		} catch (Exception e) {
 			Util.handleException(e);
 		}
-		return BYGenericResponseHandler.getResponse(UserProfileResponse
-				.getUserProfileEntity(profile, currentUser));
+		return BYGenericResponseHandler.getResponse(UserProfileResponse.getUserProfileEntity(profile, currentUser));
 	}
 
 	/* @PathVariable(value = "userId") String userId */
@@ -259,73 +254,60 @@ public class UserProfileController {
 		User user = mongoTemplate.findById(new ObjectId(userId), User.class);
 		try {
 			if ((userProfile != null) && (userId != null)) {
-//				if (null != currentUser
-//						&& SessionController.checkCurrentSessionFor(req,
-//								"SUBMIT_PROFILE")) {
-//					if (userProfile.getUserId().equals(currentUser.getId())) {
-						profile = userProfileRepository.findByUserId(userId);
+				profile = userProfileRepository.findByUserId(userId);
 
-						if (profile != null) {
-							profile.setUserTypes(userProfile.getUserTypes());
-							userProfile.getBasicProfileInfo()
-									.setShortDescription(
-											getShortDescription(userProfile));
-							profile.setLastModifiedAt(new Date());
-							profile.setSystemTags(userProfile.getSystemTags());
+				if (profile != null) {
+					profile.setUserTypes(userProfile.getUserTypes());
+					userProfile.getBasicProfileInfo().setShortDescription(getShortDescription(userProfile));
+					profile.setLastModifiedAt(new Date());
+					profile.setSystemTags(userProfile.getSystemTags());
 
-							profile.setBasicProfileInfo(userProfile
-									.getBasicProfileInfo());
-							if (!Collections.disjoint(
-									profile.getUserTypes(),
-									new ArrayList<>(Arrays.asList(
-											UserTypes.INDIVIDUAL_CAREGIVER,
-											UserTypes.INDIVIDUAL_ELDER,
-											UserTypes.INDIVIDUAL_PROFESSIONAL,
-											UserTypes.INDIVIDUAL_VOLUNTEER)))) {
-								profile.setIndividualInfo(userProfile
-										.getIndividualInfo());
-							} 
+					profile.setBasicProfileInfo(userProfile.getBasicProfileInfo());
+					if (!Collections.disjoint(
+							profile.getUserTypes(),
+							new ArrayList<>(Arrays.asList(
+									UserTypes.INDIVIDUAL_CAREGIVER,
+									UserTypes.INDIVIDUAL_ELDER,
+									UserTypes.INDIVIDUAL_PROFESSIONAL,
+									UserTypes.INDIVIDUAL_VOLUNTEER)))) {
+						profile.setIndividualInfo(userProfile.getIndividualInfo());
+					}
 
-							if (profile.getUserTypes().contains(
-									UserTypes.INSTITUTION_SERVICES)
-									|| profile.getUserTypes().contains(
-											UserTypes.INSTITUTION_BRANCH)) {
-								profile.setServiceProviderInfo(userProfile
-										.getServiceProviderInfo());
-								List<UserProfile> branchInfo = saveBranches(
-										userProfile.getServiceBranches(),
-										userId);
-								profile.setServiceBranches(branchInfo);
+					if (profile.getUserTypes().contains(
+							UserTypes.INSTITUTION_SERVICES)
+							|| profile.getUserTypes().contains(
+									UserTypes.INSTITUTION_BRANCH)) {
+						profile.setServiceProviderInfo(userProfile
+								.getServiceProviderInfo());
+						List<UserProfile> branchInfo = saveBranches(
+								userProfile.getServiceBranches(),
+								userId);
+						profile.setServiceBranches(branchInfo);
 
-							} else if (profile.getUserTypes().contains(
-									UserTypes.INDIVIDUAL_PROFESSIONAL)) {
-								profile.setServiceProviderInfo(userProfile
-										.getServiceProviderInfo());
-							} else if (profile.getUserTypes().contains(
-									UserTypes.INSTITUTION_HOUSING)) {
-								profile.setFacilities(HousingController
-										.addFacilities(
-												userProfile.getFacilities(),
-												user));
-							}
-							profile.setFeatured(userProfile.isFeatured());
-							profile.setStatus(userProfile.getStatus());
-							userProfileRepository.save(profile);
-							logger.info("User Profile update with details: "
-									+ profile.toString());
-						} else {
-							throw new BYException(
-									BYErrorCodes.USER_PROFILE_DOES_NOT_EXIST);
-						}
-
-//					} else {
-//						throw new BYException(BYErrorCodes.USER_NOT_AUTHORIZED);
-//					}
-//				} else {
-//					throw new BYException(BYErrorCodes.USER_LOGIN_REQUIRED);
-//				}
+					} else if (profile.getUserTypes().contains(
+							UserTypes.INDIVIDUAL_PROFESSIONAL)) {
+						profile.setServiceProviderInfo(userProfile
+								.getServiceProviderInfo());
+					} else if (profile.getUserTypes().contains(
+							UserTypes.INSTITUTION_HOUSING)) {
+						profile.setFacilities(HousingController
+								.addFacilities(
+										userProfile.getFacilities(),
+										user));
+					}
+					profile.setFeatured(userProfile.isFeatured());
+					profile.setStatus(userProfile.getStatus());
+					profile.setExperties(userProfile.getExperties());
+					profile.setWorkTitle(userProfile.getWorkTitle());
+					profile.setAge(userProfile.getAge());
+					userProfileRepository.save(profile);
+					logger.info("User Profile update with details: "
+							+ profile.toString());
+				} else {
+					throw new BYException(
+							BYErrorCodes.USER_PROFILE_DOES_NOT_EXIST);
+				}
 			}
-
 			else {
 				throw new BYException(BYErrorCodes.MISSING_PARAMETER);
 			}

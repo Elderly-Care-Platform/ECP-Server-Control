@@ -1,0 +1,30 @@
+<div class="container-fluid">
+	<div id="wrapper" class="row-fluid">
+		<h3 class='menu'>Ask Question Category</h3>
+		<div class="alert alert-error" ng-show="error">{{errorMessage}}</div>
+			<table style="width: 900px;">
+				<tr>
+					<td><label class="control-label"><strong>Ask Question ID</strong></label>
+					</td>
+					<td><label class="control-label" ng-bind="askCategory.id"></label></td>
+				</tr>
+				<tr>
+					<td>
+						<label class="control-label" for="title"><strong>Name</strong></label>
+					</td>
+					<td>
+						<input type="text" ng-model="askCategory.name" name="name" id="name">
+					</td>
+				</tr>
+				<tr ng-show="!error">
+					<td colspan="2">
+						<button ng-if="askCategory.id" type="submit" class="btn btn-primary" ng-click="editAskQuestionCategory()">Edit Ask Question Category</button>
+						<button ng-if="!askCategory.id" type="submit" class="btn btn-primary" ng-click="addAskQuestionCategory()">Add Ask Question Category</button>
+					</td>
+					<td colspan="2" style="text-align: right;">
+						
+					</td>
+				</tr>
+			</table>
+	</div>
+</div>

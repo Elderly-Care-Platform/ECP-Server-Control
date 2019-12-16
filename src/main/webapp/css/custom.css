@@ -163,7 +163,7 @@ label.myLabel input[type="file"] {
 }
 .navbar .nav > li > a 
 {
-	padding: 10px 13px 10px;
+	padding: 10px 6px 10px;
 }
 
 .register-page{
@@ -322,4 +322,7 @@ label.myLabel input[type="file"] {
   -moz-transition: left 0.15s ease-out;
   -o-transition: left 0.15s ease-out;
   transition: left 0.15s ease-out;
+}
+.navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container{
+  width:1000px;
 }

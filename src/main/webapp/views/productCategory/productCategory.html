@@ -1,0 +1,30 @@
+<div class="container-fluid">
+	<div id="wrapper" class="row-fluid">
+		<h3 class='menu'>Product Category</h3>
+		<div class="alert alert-error" ng-show="error">{{errorMessage}}</div>
+			<table style="width: 900px;">
+				<tr>
+					<td><label class="control-label"><strong>Product ID</strong></label>
+					</td>
+					<td><label class="control-label" ng-bind="productCategory.id"></label></td>
+				</tr>
+				<tr>
+					<td>
+						<label class="control-label" for="title"><strong>Name</strong></label>
+					</td>
+					<td>
+						<input type="text" ng-model="productCategory.name" name="name" id="name">
+					</td>
+				</tr>
+				<tr ng-show="!error">
+					<td colspan="2">
+						<button ng-if="productCategory.id" type="submit" class="btn btn-primary" ng-click="editProductCategory()">Edit Product Category</button>
+						<button ng-if="!productCategory.id" type="submit" class="btn btn-primary" ng-click="addProductCategory()">Add Product Category</button>
+					</td>
+					<td colspan="2" style="text-align: right;">
+						
+					</td>
+				</tr>
+			</table>
+	</div>
+</div>

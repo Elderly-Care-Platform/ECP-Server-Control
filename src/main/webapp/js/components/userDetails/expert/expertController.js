@@ -22,7 +22,6 @@ adminControllers
 						.success(function(response) {
 							if (response) {
 								$scope.categories = response.data;
-								console.log("//////////////////////////////////////////////////",$scope.categories);
 								$scope.profile = UserProfile.get({
 									userId: $scope.userId
 								}, function(profile) {
@@ -31,7 +30,6 @@ adminControllers
 									if(!$scope.selCategories){
 										$scope.selCategories = []
 									}
-									console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%",$scope.selCategories);
 								});
 								
 							}

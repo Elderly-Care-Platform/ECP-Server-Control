@@ -13,6 +13,8 @@ adminControllers
 				$scope.selectedServices = {};
 				$scope.categories = {};
 				$scope.selCategories = [];
+				$scope.age = "";
+				$scope.workTitle = "";
 				$scope.submitted = false;
 				
 
@@ -30,8 +32,13 @@ adminControllers
 									if(!$scope.selCategories){
 										$scope.selCategories = []
 									}
+
+									for(var i  in $scope.selCategories){
+										$scope.selCategories[i] = $scope.selCategories[i].id;
+									}
+									$scope.age = $scope.profile.age;
+									$scope.workTitle = $scope.profile.workTitle;
 								});
-								
 							}
 						});
 				};
@@ -45,7 +52,7 @@ adminControllers
 				$scope.selectTag = function(event, category) {
 					if (event.target.checked) {
 						if($scope.selCategories.indexOf(category.id)==-1){
-							$scope.selCategories[ $scope.selCategories.length] = category.id;
+							$scope.selCategories[$scope.selCategories.length] = category.id;
 						}
 					} else {
 						$scope.selCategories.splice( $scope.selCategories.indexOf(category.id), 1 );
@@ -65,6 +72,8 @@ adminControllers
 						experties = [];
 					}
 					$scope.profile.experties = experties;
+					$scope.profile.age = $scope.age;
+					$scope.profile.workTitle = $scope.workTitle;
 					
 					if (isValidForm.$invalid) {
 						window.scrollTo(0, 0);

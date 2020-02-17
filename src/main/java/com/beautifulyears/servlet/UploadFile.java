@@ -35,8 +35,8 @@ public class UploadFile extends HttpServlet {
 	private static final int TITLE_IMG_WIDTH = 640;
 	private static final int TITLE_IMG_HEIGHT = 650;
 
-	private static final int THUMBNAIL_IMG_WIDTH = 135;
-	private static final int THUMBNAIL_IMG_HEIGHT = 168;
+	private static final int THUMBNAIL_IMG_WIDTH = 200;
+	private static final int THUMBNAIL_IMG_HEIGHT = 200;
 
 	private static final Logger logger = Logger.getLogger(UploadFile.class);
 
@@ -85,51 +85,69 @@ public class UploadFile extends HttpServlet {
 						String name = new File(item.getName()).getName();
 						String extension = name
 								.substring(name.lastIndexOf(".") + 1);
-						File newFile = File.createTempFile("orig", ".jpg");
 
-						item.write(newFile);
-						origPath = (new S3FileUploader(s3MediaBucketName,
-								CDNConstants.IMAGE_CDN_ORIG_FOLDER + "/"
-										+ fname + "." + extension, newFile))
-								.uploadFile(false);
+						try {
+							long millis = System.currentTimeMillis() / 1000L;
+							System.out.println(System.getProperty("catalina.home"));
+							File newFile = new File(System.getProperty("catalina.home") + "/resources",
+							Long.toString(millis) + fname + "." + extension);
 
-						if (null != request.getParameter("transcoding")
-								&& true == Boolean.valueOf(request
-										.getParameter("transcoding"))) {
-							if (isAnimatedGif(newFile)) {
-								File titleImage = File.createTempFile("title",
-										".jpg");
-								titlePath = (new S3FileUploader(
-										s3MediaBucketName,
-										CDNConstants.IMAGE_CDN_TITLE_FOLDER
-												+ "/" + fname + "." + extension,
-										newFile)).uploadFile(false);
-								Files.copy(newFile.toPath(),
-										titleImage.toPath());
+							item.write(newFile);
 
-								File thumbnail = File.createTempFile("thumb",
-										".jpg");
-								thumbnailPath = (new S3FileUploader(
-										s3MediaBucketName,
-										CDNConstants.IMAGE_CDN_THUMB_FOLDER
-												+ "/" + fname + "." + extension,
-										newFile)).uploadFile(true);
-								Files.copy(newFile.toPath(), thumbnail.toPath());
-							} else {
-								titlePath = resizeImage(newFile,
-										TITLE_IMG_WIDTH, TITLE_IMG_HEIGHT,
-										uploadDir,
-										CDNConstants.IMAGE_CDN_TITLE_FOLDER
-												+ "/" + fname, extension, false);
-
-								thumbnailPath = resizeImage(newFile,
-										THUMBNAIL_IMG_WIDTH,
-										THUMBNAIL_IMG_HEIGHT, uploadDir,
-										CDNConstants.IMAGE_CDN_THUMB_FOLDER
-												+ "/" + fname, extension, true);
-							}
-
+							resizeImage(newFile, THUMBNAIL_IMG_WIDTH, THUMBNAIL_IMG_HEIGHT, extension);
+							thumbnailPath = "/project/images/" + newFile.getName();
+							titlePath =  thumbnailPath;
 						}
+						catch (IOException e) {
+							// Util.handleException(e);
+							throw e;
+						}
+						
+
+						// File newFile = File.createTempFile("orig", ".jpg");
+
+						// item.write(newFile);
+						// origPath = (new S3FileUploader(s3MediaBucketName,
+						// 		CDNConstants.IMAGE_CDN_ORIG_FOLDER + "/"
+						// 				+ fname + "." + extension, newFile))
+						// 		.uploadFile(false);
+						// if (null != request.getParameter("transcoding")
+						// 		&& true == Boolean.valueOf(request
+						// 				.getParameter("transcoding"))) {
+						// 	if (isAnimatedGif(newFile)) {
+						// 		File titleImage = File.createTempFile("title",
+						// 				".jpg");
+						// 		titlePath = (new S3FileUploader(
+						// 				s3MediaBucketName,
+						// 				CDNConstants.IMAGE_CDN_TITLE_FOLDER
+						// 						+ "/" + fname + "." + extension,
+						// 				newFile)).uploadFile(false);
+						// 		Files.copy(newFile.toPath(),
+						// 				titleImage.toPath());
+
+						// 		File thumbnail = File.createTempFile("thumb",
+						// 				".jpg");
+						// 		thumbnailPath = (new S3FileUploader(
+						// 				s3MediaBucketName,
+						// 				CDNConstants.IMAGE_CDN_THUMB_FOLDER
+						// 						+ "/" + fname + "." + extension,
+						// 				newFile)).uploadFile(true);
+						// 		Files.copy(newFile.toPath(), thumbnail.toPath());
+						// 	} else {
+						// 		titlePath = resizeImage(newFile,
+						// 				TITLE_IMG_WIDTH, TITLE_IMG_HEIGHT,
+						// 				uploadDir,
+						// 				CDNConstants.IMAGE_CDN_TITLE_FOLDER
+						// 						+ "/" + fname, extension, false);
+
+						// 		thumbnailPath = resizeImage(newFile,
+						// 				THUMBNAIL_IMG_WIDTH,
+						// 				THUMBNAIL_IMG_HEIGHT, uploadDir,
+						// 				CDNConstants.IMAGE_CDN_THUMB_FOLDER
+						// 						+ "/" + fname, extension, true);
+						// 	}
+
+						// }
 
 						if (null != request.getParameter("type")
 								&& "editor"
@@ -169,79 +187,141 @@ public class UploadFile extends HttpServlet {
 		}
 	}
 
-	private boolean isAnimatedGif(File f) {
-		ImageReader is = ImageIO.getImageReadersBySuffix("GIF").next();
-		ImageInputStream iis;
-		boolean isAnimatedGif = false;
-		try {
-			iis = ImageIO.createImageInputStream(f);
-			is.setInput(iis);
-			int images = is.getNumImages(true);
-			if (images > 1) {
-				isAnimatedGif = true;
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return isAnimatedGif;
-	}
+	// private boolean isAnimatedGif(File f) {
+	// 	ImageReader is = ImageIO.getImageReadersBySuffix("GIF").next();
+	// 	ImageInputStream iis;
+	// 	boolean isAnimatedGif = false;
+	// 	try {
+	// 		iis = ImageIO.createImageInputStream(f);
+	// 		is.setInput(iis);
+	// 		int images = is.getNumImages(true);
+	// 		if (images > 1) {
+	// 			isAnimatedGif = true;
+	// 		}
+	// 	} catch (IOException e) {
+	// 		e.printStackTrace();
+	// 	}
+	// 	return isAnimatedGif;
+	// }
 
-	private String resizeImage(File newFile, int width, int height,
-			String uploadDir, String fname, String extension, boolean async)
-			throws IOException {
+	// private String resizeImage(File newFile, int width, int height,
+	// 		String uploadDir, String fname, String extension, boolean async)
+	// 		throws IOException {
 
-		String path = null;
+	// 	String path = null;
 
-		BufferedImage image = ImageIO.read(newFile);
-		int imageWidth = image.getWidth(null);
-		int imageHeight = image.getHeight(null);
-		int newHeight = 0;
-		int newWidth = 0;
+	// 	BufferedImage image = ImageIO.read(newFile);
+	// 	int imageWidth = image.getWidth(null);
+	// 	int imageHeight = image.getHeight(null);
+	// 	int newHeight = 0;
+	// 	int newWidth = 0;
 
-		double aspectRatio = (double) imageWidth / (double) imageHeight;
-		if (imageWidth > width && imageHeight > height) {
-			// both height and width are bigger
-			if ((imageWidth - width) > (imageHeight - height)) {
-				newWidth = width;
-				newHeight = (int) (height / aspectRatio);
-			} else {
-				newHeight = height;
-				newWidth = (int) (height * aspectRatio);
-			}
-		} else if (imageWidth > width) {
-			// only width is bigger
-			newWidth = width;
-			newHeight = (int) (height / aspectRatio);
-		} else if (imageHeight > height) {
-			// only height is bigger
-			newHeight = height;
-			newWidth = (int) (width * aspectRatio);
-		} else {
-			// both are smaller then max
-			newHeight = 0;
-			newWidth = 0;
-		}
-		if (newHeight != 0 && newWidth != 0) {
-			BufferedImage thumbnail = Scalr.resize(image,
-					Scalr.Method.ULTRA_QUALITY, Scalr.Mode.FIT_TO_WIDTH,
-					newWidth, newHeight, Scalr.OP_ANTIALIAS);
-			File f = File.createTempFile(fname, ".jpg");
-			ImageIO.write(thumbnail, extension, f);
-			path = (new S3FileUploader(s3MediaBucketName, fname + "_" + width
-					+ "_" + height + "." + extension, f)).uploadFile(async);
+	// 	double aspectRatio = (double) imageWidth / (double) imageHeight;
+	// 	if (imageWidth > width && imageHeight > height) {
+	// 		// both height and width are bigger
+	// 		if ((imageWidth - width) > (imageHeight - height)) {
+	// 			newWidth = width;
+	// 			newHeight = (int) (height / aspectRatio);
+	// 		} else {
+	// 			newHeight = height;
+	// 			newWidth = (int) (height * aspectRatio);
+	// 		}
+	// 	} else if (imageWidth > width) {
+	// 		// only width is bigger
+	// 		newWidth = width;
+	// 		newHeight = (int) (height / aspectRatio);
+	// 	} else if (imageHeight > height) {
+	// 		// only height is bigger
+	// 		newHeight = height;
+	// 		newWidth = (int) (width * aspectRatio);
+	// 	} else {
+	// 		// both are smaller then max
+	// 		newHeight = 0;
+	// 		newWidth = 0;
+	// 	}
+	// 	if (newHeight != 0 && newWidth != 0) {
+	// 		BufferedImage thumbnail = Scalr.resize(image,
+	// 				Scalr.Method.ULTRA_QUALITY, Scalr.Mode.FIT_TO_WIDTH,
+	// 				newWidth, newHeight, Scalr.OP_ANTIALIAS);
+	// 		File f = File.createTempFile(fname, ".jpg");
+	// 		ImageIO.write(thumbnail, extension, f);
+	// 		path = (new S3FileUploader(s3MediaBucketName, fname + "_" + width
+	// 				+ "_" + height + "." + extension, f)).uploadFile(async);
 
-		} else {
-			BufferedImage thumbnail = Scalr.resize(image,
-					Scalr.Method.ULTRA_QUALITY, Scalr.Mode.FIT_TO_WIDTH, imageWidth,
-					imageHeight, Scalr.OP_ANTIALIAS);
-			File f = File.createTempFile(fname, ".jpg");
-			ImageIO.write(thumbnail, extension, f);
-			path = (new S3FileUploader(s3MediaBucketName, fname + "_" + width
-					+ "_" + height + "." + extension, f)).uploadFile(async);
-		}
-		return path;
+	// 	} else {
+	// 		BufferedImage thumbnail = Scalr.resize(image,
+	// 				Scalr.Method.ULTRA_QUALITY, Scalr.Mode.FIT_TO_WIDTH, imageWidth,
+	// 				imageHeight, Scalr.OP_ANTIALIAS);
+	// 		File f = File.createTempFile(fname, ".jpg");
+	// 		ImageIO.write(thumbnail, extension, f);
+	// 		path = (new S3FileUploader(s3MediaBucketName, fname + "_" + width
+	// 				+ "_" + height + "." + extension, f)).uploadFile(async);
+	// 	}
+	// 	return path;
 
-	}
+	// }
 
 
+	/**
+     * Resize image
+     */
+    private void resizeImage(File newFile, int width, int height, String extension) throws IOException {
+
+        BufferedImage image = ImageIO.read(newFile);
+        int imageWidth = image.getWidth(null);
+        int imageHeight = image.getHeight(null);
+        int newHeight = 0;
+        int newWidth = 0;
+
+        double aspectRatio = (double) imageWidth / (double) imageHeight;
+        if (imageWidth > width && imageHeight > height) {
+            // both height and width are bigger
+            if ((imageWidth - width) > (imageHeight - height)) {
+                newWidth = width;
+                newHeight = (int) (height / aspectRatio);
+            } else {
+                newHeight = height;
+                newWidth = (int) (height * aspectRatio);
+            }
+        } else if (imageWidth > width) {
+            // only width is bigger
+            newWidth = width;
+            newHeight = (int) (height / aspectRatio);
+        } else if (imageHeight > height) {
+            // only height is bigger
+            newHeight = height;
+            newWidth = (int) (width * aspectRatio);
+        } else {
+            // both are smaller then max
+            newHeight = 0;
+            newWidth = 0;
+        }
+        if (newHeight != 0 && newWidth != 0) {
+            BufferedImage thumbnail = Scalr.resize(image, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.FIT_TO_WIDTH, newWidth,
+                    newHeight, Scalr.OP_ANTIALIAS);
+            // File f = File.createTempFile("new", ".jpg", new File(path));
+            try {
+
+                ImageIO.write(thumbnail, extension, newFile);
+                System.out.println(ImageIO.write(thumbnail, extension, newFile));
+            } catch (Exception e) {
+                // TODO: handle exception
+                throw (e);
+            }
+
+        } else {
+            BufferedImage thumbnail = Scalr.resize(image, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.FIT_TO_WIDTH,
+                    imageWidth, imageHeight, Scalr.OP_ANTIALIAS);
+            try {
+
+                ImageIO.write(thumbnail, extension, newFile);
+                System.out.println(ImageIO.write(thumbnail, extension, newFile));
+            } catch (Exception e) {
+                // TODO: handle exception
+                throw (e);
+            }
+
+        }
+
+    }
 }

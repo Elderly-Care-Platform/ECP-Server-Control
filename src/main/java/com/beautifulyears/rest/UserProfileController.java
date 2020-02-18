@@ -295,11 +295,15 @@ public class UserProfileController {
 										userProfile.getFacilities(),
 										user));
 					}
+					else if (profile.getUserTypes().contains(
+							UserTypes.ASK_EXPERT)) {
+						profile.setExperties(userProfile.getExperties());
+						profile.setWorkTitle(userProfile.getWorkTitle());
+						profile.setAge(userProfile.getAge());
+					}
 					profile.setFeatured(userProfile.isFeatured());
 					profile.setStatus(userProfile.getStatus());
-					profile.setExperties(userProfile.getExperties());
-					profile.setWorkTitle(userProfile.getWorkTitle());
-					profile.setAge(userProfile.getAge());
+					
 					userProfileRepository.save(profile);
 					logger.info("User Profile update with details: "
 							+ profile.toString());

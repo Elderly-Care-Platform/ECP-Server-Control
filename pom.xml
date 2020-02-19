@@ -103,7 +103,7 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>3.0</version>
+				<version>3.x</version>
 				<executions>
 					<execution>
 						<id>war-exploded</id>

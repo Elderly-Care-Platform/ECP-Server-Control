@@ -263,12 +263,12 @@ public class UserController {
 		String passwordCode = user.getPassword();
 		Date passwordCodeExpiry = user.getPasswordCodeExpiry();
 		Integer userIdType = user.getUserIdType();
-		Integer userRegType = user.getUserRegType();
+		Integer userRegType = user.getUserRegType() == null ?  0 : user.getUserRegType();
 		String phoneNumber = user.getPhoneNumber();
 		List<String> userTags = user.getUserTags();
 
 		// Users registered through the BY site will always have ROLE = USER
-		String userRoleId = "USER";
+		String userRoleId = user.getUserRoleId() == null ? "USER" : user.getUserRoleId();
 
 		// TODO: Change this logic during user regitration phase 2
 		if (userRoleId != null

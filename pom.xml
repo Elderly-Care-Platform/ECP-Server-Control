@@ -114,7 +114,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<useCache>true</useCache>
+					<useCache>false</useCache>
 					<!-- webResources>
 		            <resource>
 		                <directory>${project.build.directory}/minify</directory>

@@ -367,10 +367,11 @@ public class UserProfileController {
 			Document doc = Jsoup.parse(profile.getBasicProfileInfo()
 					.getDescription());
 			String longDesc = doc.text();
-			String desc = Util.truncateText(doc.text());
-			if (longDesc != null && !desc.equals(longDesc)) {
-				shortDescription = desc;
-			}
+			// String desc = Util.truncateText(doc.text());
+			// if (longDesc != null && !desc.equals(longDesc)) {
+			// 	shortDescription = desc;
+			// }
+			shortDescription = longDesc; //pulk: added this logic by commenting above code 
 		}
 		return shortDescription;
 	}

@@ -18,7 +18,7 @@ public class IndividualProfileInfo {
 
 	private int gender; // 0: female, 1: male.
 
-	private Date dob;
+	private String dob;
 
 	private Map<String, Date> otherDates;
 
@@ -27,9 +27,9 @@ public class IndividualProfileInfo {
 	@TextIndexed(weight=2)
 	private List<String> emotionalIssues;
 
-	@TextIndexed(weight=3)
-	@DBRef
-	private List<Menu> medicalIssues;
+	// @TextIndexed(weight=3)
+	// @DBRef
+	private List<String> medicalIssues;
 
 	@TextIndexed(weight=4)
 	private List<String> otherIssues;
@@ -38,9 +38,9 @@ public class IndividualProfileInfo {
 
 	private List<Language> spokenLanguage;
 
-	@TextIndexed(weight=5)
-	@DBRef
-	private List<Menu> hobbies;
+	// @TextIndexed(weight=5)
+	// @DBRef
+	private List<String> hobbies;
 
 	@TextIndexed(weight=6)
 	private List<String> otherHobbies;
@@ -76,11 +76,11 @@ public class IndividualProfileInfo {
 		this.gender = gender;
 	}
 
-	public Date getDob() {
+	public String getDob() {
 		return dob;
 	}
 
-	public void setDob(Date dob) {
+	public void setDob(String dob) {
 		this.dob = dob;
 	}
 
@@ -108,11 +108,11 @@ public class IndividualProfileInfo {
 		this.emotionalIssues = emotionalIssues;
 	}
 
-	public List<Menu> getMedicalIssues() {
+	public List<String> getMedicalIssues() {
 		return medicalIssues;
 	}
 
-	public void setMedicalIssues(List<Menu> medicalIssues) {
+	public void setMedicalIssues(List<String> medicalIssues) {
 		this.medicalIssues = medicalIssues;
 	}
 
@@ -140,11 +140,11 @@ public class IndividualProfileInfo {
 		this.spokenLanguage = spokenLanguage;
 	}
 
-	public List<Menu> getHobbies() {
+	public List<String> getHobbies() {
 		return hobbies;
 	}
 
-	public void setHobbies(List<Menu> hobbies) {
+	public void setHobbies(List<String> hobbies) {
 		this.hobbies = hobbies;
 	}
 

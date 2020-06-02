@@ -11,6 +11,7 @@ import com.beautifulyears.domain.User;
 import com.beautifulyears.exceptions.BYErrorCodes;
 import com.beautifulyears.exceptions.BYException;
 import com.beautifulyears.repository.EventRepository;
+import com.beautifulyears.repository.UserRepository;
 import com.beautifulyears.rest.response.BYGenericResponseHandler;
 import com.beautifulyears.util.LoggerUtil;
 import com.beautifulyears.util.Util;
@@ -31,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import com.beautifulyears.mail.MailHandler;
 /**
  * The REST based service for managing "event"
  * 
@@ -44,13 +45,16 @@ public class EventController {
 	private static final Logger logger = Logger
 			.getLogger(EventController.class);
 	private EventRepository eventRepository;
+	private UserRepository userRepository;
 	private MongoTemplate mongoTemplate;
 	ActivityLogHandler<Event> logHandler;
 	
 	@Autowired
 	public EventController(EventRepository eventRepository, 
+			UserRepository userRepository,
 			MongoTemplate mongoTemplate) {
 		this.eventRepository = eventRepository;
+		this.userRepository = userRepository;
 		this.mongoTemplate = mongoTemplate;
 		logHandler = new EventActivityLogHandler(mongoTemplate);
 	}
@@ -102,7 +106,8 @@ public class EventController {
 					event.getLanguages(), 
 					event.getOrganiser(), 
 					event.getOrgPhone(), 
-					event.getOrgEmail());
+					event.getOrgEmail(),
+					currentUser.getId());
 
 				event = eventRepository.save(eventExtracted);
 				logHandler.addLog(event, ActivityLogConstants.CRUD_TYPE_CREATE, request);
@@ -121,9 +126,11 @@ public class EventController {
 	public Object editEvent(@RequestBody Event event, HttpServletRequest request) throws Exception {
 		LoggerUtil.logEntry();
 		User currentUser = Util.getSessionUser(request);
+		int oldStatus;
 		if (null != currentUser) {
 			if (event != null && (!Util.isEmpty(event.getId()))) {
 				Event oldEvent = mongoTemplate.findById(new ObjectId(event.getId()), Event.class);
+				oldStatus = oldEvent.getStatus();
 				oldEvent.setTitle(event.getTitle()); 
 				oldEvent.setDatetime(event.getDatetime());
 				oldEvent.setDescription(event.getDescription());
@@ -140,6 +147,30 @@ public class EventController {
 				oldEvent.setLastModifiedAt(new Date());
 				
 				event = eventRepository.save(oldEvent);
+				if(oldStatus != event.getStatus()){
+					User user = userRepository.findOne(event.getCreatedBy());
+					if(user != null && event.getStatus() == 0){
+						MailHandler.sendMailToUser(user, "Congratulations! The Upcoming Event you shared has been approved!", 
+						"Hi "+user.getUserName()+","+
+						"<br/><br/>Your event "+ event.getTitle() +" has been reviewed and approved by the Joy of Age Administrator.  To see your published event please sign into the Joy of Age website."+
+						"<br/><br/>We look forward to more of your suggestions for our community.  Thank you for being an active member of the Joy of Age community for elders."+ 
+						"<br/><br/>Sincerely,"+
+						"<br/>Bot@JoyofAge" +
+						"<br/><img style=\"background-color:#212942;padding:5px\" src=\"http://dev.joyofage.org/assets/images/Nav_logo.png\" alt=\"Logo JoyOfAge\">" +
+						"<br/>PS: Please ignore this email alert if you have already responded to this question.");
+					}
+					if(user != null && event.getStatus() == 1){
+						MailHandler.sendMailToUser(user, "Regret: The Upcoming Event you shared has been rejected!", 
+						"Hi "+user.getUserName()+","+
+						"<br/><br/>Your event "+ event.getTitle() +" > has been reviewed and unfortunately rejected by the Joy of Age Administrator.  Please write to the admin@joyogage.org to understand why your event rejected."+
+						"<br/><br/>Please continue to provide your suggestions relevant to the Joy of Age community.  Thank you for being an active member of the Joy of Age community for elders."+ 
+						"<br/><br/>Sincerely,"+
+						"<br/>Bot@JoyofAge" +
+						"<br/><img style=\"background-color:#212942;padding:5px\" src=\"http://dev.joyofage.org/assets/images/Nav_logo.png\" alt=\"Logo JoyOfAge\">" +
+						"<br/>PS: Please ignore this email alert if you have already responded to this question.");
+					}
+				}
+				
 				logHandler.addLog(event,
 						ActivityLogConstants.CRUD_TYPE_UPDATE, request);
 				logger.info("new event entity created with ID: "

@@ -33,6 +33,7 @@
 				<td>
 					<span ng-if="EventList.status == 0">Active</span>
 					<span ng-if="EventList.status == 1">InActive</span>
+					<span ng-if="EventList.status == 2">Suggested</span>
 				</td>
 				<td>{{EventList.datetime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 				<td>{{EventList.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</td>

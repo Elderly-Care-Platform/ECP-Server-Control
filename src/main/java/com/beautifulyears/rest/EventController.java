@@ -156,7 +156,7 @@ public class EventController {
 						"<br/><br/>We look forward to more of your suggestions for our community.  Thank you for being an active member of the Joy of Age community for elders."+ 
 						"<br/><br/>Sincerely,"+
 						"<br/>Bot@JoyofAge" +
-						"<br/><img style=\"background-color:#212942;padding:5px\" src=\"http://dev.joyofage.org/assets/images/Nav_logo.png\" alt=\"Logo JoyOfAge\">" +
+						"<br/><img style=\"background-color:#212942;padding:5px\" src=\"http://dev.joyofage.org/assets/images/JOA_Logo_Light_RGB.png\" alt=\"Logo JoyOfAge\">" +
 						"<br/>PS: Please ignore this email alert if you have already responded to this question.");
 					}
 					if(user != null && event.getStatus() == 1){
@@ -166,7 +166,7 @@ public class EventController {
 						"<br/><br/>Please continue to provide your suggestions relevant to the Joy of Age community.  Thank you for being an active member of the Joy of Age community for elders."+ 
 						"<br/><br/>Sincerely,"+
 						"<br/>Bot@JoyofAge" +
-						"<br/><img style=\"background-color:#212942;padding:5px\" src=\"http://dev.joyofage.org/assets/images/Nav_logo.png\" alt=\"Logo JoyOfAge\">" +
+						"<br/><img style=\"background-color:#212942;padding:5px\" src=\"http://dev.joyofage.org/assets/images/JOA_Logo_Light_RGB.png\" alt=\"Logo JoyOfAge\">" +
 						"<br/>PS: Please ignore this email alert if you have already responded to this question.");
 					}
 				}
